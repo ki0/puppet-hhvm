@@ -1,5 +1,5 @@
 # Class' service disabling
 #
-class { 'standard42':
+class { 'hhvm':
   disable => true,
 }

@@ -1,27 +1,27 @@
-# Class: standard42::params
+# Class: hhvm::params
 #
-# This class defines default parameters used by the main module class standard42
+# This class defines default parameters used by the main module class hhvm
 # Operating Systems differences in names and paths are addressed here
 #
 # == Variables
 #
-# Refer to standard42 class for the variables defined here.
+# Refer to hhvm class for the variables defined here.
 #
 # == Usage
 #
 # This class is not intended to be used directly.
 # It may be imported or inherited by other classes
 #
-class standard42::params {
+class hhvm::params {
 
   ### Application related parameters
 
   $package = $::operatingsystem ? {
-    default => 'standard42',
+    default => 'hhvm',
   }
 
   $service = $::operatingsystem ? {
-    default => 'standard42',
+    default => 'hhvm',
   }
 
   $service_status = $::operatingsystem ? {
@@ -29,7 +29,7 @@ class standard42::params {
   }
 
   $process = $::operatingsystem ? {
-    default => 'standard42',
+    default => 'hhvm',
   }
 
   $process_args = $::operatingsystem ? {
@@ -37,15 +37,15 @@ class standard42::params {
   }
 
   $process_user = $::operatingsystem ? {
-    default => 'standard42',
+    default => 'hhvm',
   }
 
   $config_dir = $::operatingsystem ? {
-    default => '/etc/standard42',
+    default => '/etc/hhvm',
   }
 
   $config_file = $::operatingsystem ? {
-    default => '/etc/standard42/standard42.conf',
+    default => '/etc/hhvm/hhvm.conf',
   }
 
   $config_file_mode = $::operatingsystem ? {
@@ -61,24 +61,24 @@ class standard42::params {
   }
 
   $config_file_init = $::operatingsystem ? {
-    /(?i:Debian|Ubuntu|Mint)/ => '/etc/default/standard42',
-    default                   => '/etc/sysconfig/standard42',
+    /(?i:Debian|Ubuntu|Mint)/ => '/etc/default/hhvm',
+    default                   => '/etc/sysconfig/hhvm',
   }
 
   $pid_file = $::operatingsystem ? {
-    default => '/var/run/standard42.pid',
+    default => '/var/run/hhvm.pid',
   }
 
   $data_dir = $::operatingsystem ? {
-    default => '/etc/standard42',
+    default => '/etc/hhvm',
   }
 
   $log_dir = $::operatingsystem ? {
-    default => '/var/log/standard42',
+    default => '/var/log/hhvm',
   }
 
   $log_file = $::operatingsystem ? {
-    default => '/var/log/standard42/standard42.log',
+    default => '/var/log/hhvm/hhvm.log',
   }
 
   $port = '42'
