@@ -1,4 +1,4 @@
-name 'example42-hhvm'
+name 'puppet-hhvm'
 version '2.0.10'
 
 author 'Alessandro Franceschi'

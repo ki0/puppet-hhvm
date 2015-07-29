@@ -199,6 +199,7 @@
 #
 # See README for usage patterns.
 #
+
 class hhvm (
   $my_class            = params_lookup( 'my_class' ),
   $source              = params_lookup( 'source' ),
