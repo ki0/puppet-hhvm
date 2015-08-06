@@ -201,50 +201,55 @@
 #
 
 class hhvm (
-  use_hhvm_repo        = params_lookup( 'use_hhvm_repo' ),
-  $my_class            = params_lookup( 'my_class' ),
-  $source              = params_lookup( 'source' ),
-  $source_dir          = params_lookup( 'source_dir' ),
-  $source_dir_purge    = params_lookup( 'source_dir_purge' ),
-  $template            = params_lookup( 'template' ),
-  $service_autorestart = params_lookup( 'service_autorestart' , 'global' ),
-  $options             = params_lookup( 'options' ),
-  $version             = params_lookup( 'version' ),
-  $absent              = params_lookup( 'absent' ),
-  $disable             = params_lookup( 'disable' ),
-  $disableboot         = params_lookup( 'disableboot' ),
-  $monitor             = params_lookup( 'monitor' , 'global' ),
-  $monitor_tool        = params_lookup( 'monitor_tool' , 'global' ),
-  $monitor_target      = params_lookup( 'monitor_target' , 'global' ),
-  $puppi               = params_lookup( 'puppi' , 'global' ),
-  $puppi_helper        = params_lookup( 'puppi_helper' , 'global' ),
-  $firewall            = params_lookup( 'firewall' , 'global' ),
-  $firewall_tool       = params_lookup( 'firewall_tool' , 'global' ),
-  $firewall_src        = params_lookup( 'firewall_src' , 'global' ),
-  $firewall_dst        = params_lookup( 'firewall_dst' , 'global' ),
-  $debug               = params_lookup( 'debug' , 'global' ),
-  $audit_only          = params_lookup( 'audit_only' , 'global' ),
-  $noops               = params_lookup( 'noops' ),
-  $package             = params_lookup( 'package' ),
-  $service             = params_lookup( 'service' ),
-  $service_status      = params_lookup( 'service_status' ),
-  $process             = params_lookup( 'process' ),
-  $process_args        = params_lookup( 'process_args' ),
-  $process_user        = params_lookup( 'process_user' ),
-  $config_dir          = params_lookup( 'config_dir' ),
-  $config_file         = params_lookup( 'config_file' ),
-  $config_file_mode    = params_lookup( 'config_file_mode' ),
-  $config_file_owner   = params_lookup( 'config_file_owner' ),
-  $config_file_group   = params_lookup( 'config_file_group' ),
-  $config_file_init    = params_lookup( 'config_file_init' ),
-  $pid_file            = params_lookup( 'pid_file' ),
-  $data_dir            = params_lookup( 'data_dir' ),
-  $log_dir             = params_lookup( 'log_dir' ),
-  $log_file            = params_lookup( 'log_file' ),
-  $port                = params_lookup( 'port' ),
-  $protocol            = params_lookup( 'protocol' )
+  $use_hhvm_repo         = params_lookup( 'use_hhvm_repo' ),
+  $config_php_ini_file   = params_lookup( 'config_php_ini_file' ),
+  $source_php_ini_file   = params_lookup( 'source_php_ini_file' ),
+  $template_php_ini_file = params_lookup( 'template_php_ini_file' ),
+  $socket_file           = params_lookup( 'socket_file' ),
+  $my_class              = params_lookup( 'my_class' ),
+  $source                = params_lookup( 'source' ),
+  $source_dir            = params_lookup( 'source_dir' ),
+  $source_dir_purge      = params_lookup( 'source_dir_purge' ),
+  $template              = params_lookup( 'template' ),
+  $service_autorestart   = params_lookup( 'service_autorestart' , 'global' ),
+  $options               = params_lookup( 'options' ),
+  $version               = params_lookup( 'version' ),
+  $absent                = params_lookup( 'absent' ),
+  $disable               = params_lookup( 'disable' ),
+  $disableboot           = params_lookup( 'disableboot' ),
+  $monitor               = params_lookup( 'monitor' , 'global' ),
+  $monitor_tool          = params_lookup( 'monitor_tool' , 'global' ),
+  $monitor_target        = params_lookup( 'monitor_target' , 'global' ),
+  $puppi                 = params_lookup( 'puppi' , 'global' ),
+  $puppi_helper          = params_lookup( 'puppi_helper' , 'global' ),
+  $firewall              = params_lookup( 'firewall' , 'global' ),
+  $firewall_tool         = params_lookup( 'firewall_tool' , 'global' ),
+  $firewall_src          = params_lookup( 'firewall_src' , 'global' ),
+  $firewall_dst          = params_lookup( 'firewall_dst' , 'global' ),
+  $debug                 = params_lookup( 'debug' , 'global' ),
+  $audit_only            = params_lookup( 'audit_only' , 'global' ),
+  $noops                 = params_lookup( 'noops' ),
+  $package               = params_lookup( 'package' ),
+  $service               = params_lookup( 'service' ),
+  $service_status        = params_lookup( 'service_status' ),
+  $process               = params_lookup( 'process' ),
+  $process_args          = params_lookup( 'process_args' ),
+  $process_user          = params_lookup( 'process_user' ),
+  $config_dir            = params_lookup( 'config_dir' ),
+  $config_file           = params_lookup( 'config_file' ),
+  $config_file_mode      = params_lookup( 'config_file_mode' ),
+  $config_file_owner     = params_lookup( 'config_file_owner' ),
+  $config_file_group     = params_lookup( 'config_file_group' ),
+  $config_file_init      = params_lookup( 'config_file_init' ),
+  $pid_file              = params_lookup( 'pid_file' ),
+  $data_dir              = params_lookup( 'data_dir' ),
+  $log_dir               = params_lookup( 'log_dir' ),
+  $log_file              = params_lookup( 'log_file' ),
+  $port                  = params_lookup( 'port' ),
+  $protocol              = params_lookup( 'protocol' )
   ) inherits hhvm::params {
 
+  $bool_socket_file=any2bool($socket_file)
   $bool_use_hhvm_repo=any2bool($use_hhvm_repo)
   $bool_source_dir_purge=any2bool($source_dir_purge)
   $bool_service_autorestart=any2bool($service_autorestart)
@@ -286,6 +291,16 @@ class hhvm (
   $manage_service_autorestart = $hhvm::bool_service_autorestart ? {
     true    => Service[hhvm],
     false   => undef,
+  }
+
+  $manage_port = $hhvm::bool_socket_file ? {
+    true  => 'socket',
+    false => $hhvm::port
+  }
+
+  $manage_monitor_target = $hhvm::bool_socket_file ? {
+    true  => $hhvm::socket_file,
+    false => $hhvm::monitor_target
   }
 
   $manage_file = $hhvm::bool_absent ? {
@@ -424,10 +439,10 @@ class hhvm (
   ### Service monitoring, if enabled ( monitor => true )
   if $hhvm::bool_monitor == true {
     if $hhvm::port != '' {
-      monitor::port { "hhvm_${hhvm::protocol}_${hhvm::port}":
+      monitor::port { "hhvm_${hhvm::protocol}_${hhvm::manage_port}":
         protocol => $hhvm::protocol,
         port     => $hhvm::port,
-        target   => $hhvm::monitor_target,
+        target   => $hhvm::manage_monitor_target,
         tool     => $hhvm::monitor_tool,
         enable   => $hhvm::manage_monitor,
         noop     => $hhvm::bool_noops,
@@ -436,7 +451,7 @@ class hhvm (
     if $hhvm::service != '' {
       monitor::process { 'hhvm_process':
         process  => $hhvm::process,
-        service  => $hhvm::service,
+        service  => $hhvm::service
         pidfile  => $hhvm::pid_file,
         user     => $hhvm::process_user,
         argument => $hhvm::process_args,
@@ -448,7 +463,7 @@ class hhvm (
   }
 
   ### Firewall management, if enabled ( firewall => true )
-  if $hhvm::bool_firewall == true and $hhvm::port != '' {
+  if $hhvm::bool_firewall == true and $hhvm::port != '' and $hhvm::socket_file == '' {
     firewall { "hhvm_${hhvm::protocol}_${hhvm::port}":
       source      => $hhvm::firewall_src,
       destination => $hhvm::firewall_dst,

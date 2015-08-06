@@ -37,7 +37,8 @@ class hhvm::params {
   }
 
   $process_user = $::operatingsystem ? {
-    default => 'hhvm',
+    /(?i:Debian|Ubuntu|Mint)/ => 'www-data',
+    default                   => 'hhvm',
   }
 
   $config_dir = $::operatingsystem ? {
@@ -85,6 +86,8 @@ class hhvm::params {
     default => '/etc/hhvm/php.ini',
   }
 
+  $socket_file = ''
+
   $use_hhvm_repo = false
 
   $port = '9000'
@@ -93,11 +96,11 @@ class hhvm::params {
   # General Settings
   $my_class = ''
   $source = ''
-  $source_php_ini = ''
+  $source_php_ini_file = ''
   $source_dir = ''
   $source_dir_purge = false
   $template = 'hhvm/server.ini.erb'
-  $template_php_ini = 'hhvm/php.ini.erb'
+  $template_php_ini_file = 'hhvm/php.ini.erb'
   $options = ''
   $service_autorestart = true
   $version = 'present'
