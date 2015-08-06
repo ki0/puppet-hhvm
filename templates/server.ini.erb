@@ -8,7 +8,6 @@ pid =  <%= @pid_file %>
 
 <% if @socket_file != '' -%>
 hhvm.server.socket = <%= @socket_file %>
-<% end -%>
 <% else -%>
 hhvm.server.port = 9000
 <% end -%>
