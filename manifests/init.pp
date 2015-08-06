@@ -201,6 +201,7 @@
 #
 
 class hhvm (
+  use_hhvm_repo        = params_lookup( 'use_hhvm_repo' ),
   $my_class            = params_lookup( 'my_class' ),
   $source              = params_lookup( 'source' ),
   $source_dir          = params_lookup( 'source_dir' ),
@@ -244,6 +245,7 @@ class hhvm (
   $protocol            = params_lookup( 'protocol' )
   ) inherits hhvm::params {
 
+  $bool_use_hhvm_repo=any2bool($use_hhvm_repo)
   $bool_source_dir_purge=any2bool($source_dir_purge)
   $bool_service_autorestart=any2bool($service_autorestart)
   $bool_absent=any2bool($absent)
@@ -326,7 +328,21 @@ class hhvm (
     default   => template($hhvm::template),
   }
 
+  $manage_php_ini_file_source = $hhvm::source_php_ini ? {
+    ''        => undef,
+    default   => $hhvm::source_php_ini,
+  }
+
+  $manage_php_ini_file_content = $hhvm::template_php_ini ? {
+    ''        => undef,
+    default   => template($hhvm::template_php_ini),
+  }
+
   ### Managed resources
+  if $hhvm::bool_use_hhvm_repo == true {
+    require hhvm::prerequisites
+  }
+
   package { $hhvm::package:
     ensure  => $hhvm::manage_package,
     noop    => $hhvm::bool_noops,
@@ -357,6 +373,21 @@ class hhvm (
     noop    => $hhvm::bool_noops,
   }
 
+  file { 'php.ini':
+    ensure  => $hhvm::manage_file,
+    path    => $hhvm::config_php_ini_file,
+    mode    => $hhvm::config_file_mode,
+    owner   => $hhvm::config_file_owner,
+    group   => $hhvm::config_file_group,
+    require => Package[$hhvm::package],
+    notify  => $hhvm::manage_service_autorestart,
+    source  => $hhvm::manage_php_ini_file_source,
+    content => $hhvm::manage_php_ini_file_content,
+    replace => $hhvm::manage_file_replace,
+    audit   => $hhvm::manage_audit,
+    noop    => $hhvm::bool_noops,
+  }
+
   # The whole hhvm configuration directory can be recursively overriden
   if $hhvm::source_dir {
     file { 'hhvm.dir':
@@ -374,12 +405,10 @@ class hhvm (
     }
   }
 
-
   ### Include custom class if $my_class is set
   if $hhvm::my_class {
     include $hhvm::my_class
   }
-
 
   ### Provide puppi data, if enabled ( puppi => true )
   if $hhvm::bool_puppi == true {
@@ -391,7 +420,6 @@ class hhvm (
       noop      => $hhvm::bool_noops,
     }
   }
-
 
   ### Service monitoring, if enabled ( monitor => true )
   if $hhvm::bool_monitor == true {
@@ -419,7 +447,6 @@ class hhvm (
     }
   }
 
-
   ### Firewall management, if enabled ( firewall => true )
   if $hhvm::bool_firewall == true and $hhvm::port != '' {
     firewall { "hhvm_${hhvm::protocol}_${hhvm::port}":
@@ -434,7 +461,6 @@ class hhvm (
       noop        => $hhvm::bool_noops,
     }
   }
-
 
   ### Debugging, if enabled ( debug => true )
   if $hhvm::bool_debug == true {

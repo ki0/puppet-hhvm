@@ -45,7 +45,7 @@ class hhvm::params {
   }
 
   $config_file = $::operatingsystem ? {
-    default => '/etc/hhvm/hhvm.conf',
+    default => '/etc/hhvm/server.ini',
   }
 
   $config_file_mode = $::operatingsystem ? {
@@ -66,11 +66,11 @@ class hhvm::params {
   }
 
   $pid_file = $::operatingsystem ? {
-    default => '/var/run/hhvm.pid',
+    default => '/var/run/hhvm/pid',
   }
 
   $data_dir = $::operatingsystem ? {
-    default => '/etc/hhvm',
+    default => '/var/lib/hhvm',
   }
 
   $log_dir = $::operatingsystem ? {
@@ -81,15 +81,23 @@ class hhvm::params {
     default => '/var/log/hhvm/hhvm.log',
   }
 
-  $port = '42'
+  $config_php_ini_file = $::operatingsystem ? {
+    default => '/etc/hhvm/php.ini',
+  }
+
+  $use_hhvm_repo = false
+
+  $port = '9000'
   $protocol = 'tcp'
 
   # General Settings
   $my_class = ''
   $source = ''
+  $source_php_ini = ''
   $source_dir = ''
   $source_dir_purge = false
-  $template = ''
+  $template = 'hhvm/server.ini.erb'
+  $template_php_ini = 'hhvm/php.ini.erb'
   $options = ''
   $service_autorestart = true
   $version = 'present'
