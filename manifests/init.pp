@@ -295,12 +295,12 @@ class hhvm (
 
   $manage_port = $hhvm::bool_socket_file ? {
     true  => 'socket',
-    false => $hhvm::port
+    false => $hhvm::port,
   }
 
   $manage_monitor_target = $hhvm::bool_socket_file ? {
     true  => $hhvm::socket_file,
-    false => $hhvm::monitor_target
+    false => $hhvm::monitor_target,
   }
 
   $manage_file = $hhvm::bool_absent ? {
