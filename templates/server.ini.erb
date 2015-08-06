@@ -6,7 +6,12 @@ pid =  <%= @pid_file %>
 
 ; hhvm specific
 
+<% if @socket_file != '' -%>
+hhvm.server.socket = <%= @socket_file %>
+<% end -%>
+<% else -%>
 hhvm.server.port = 9000
+<% end -%>
 hhvm.server.type = fastcgi
 hhvm.server.default_document = index.php
 hhvm.log.use_log_file = true
