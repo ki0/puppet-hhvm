@@ -9,7 +9,7 @@ pid =  <%= @pid_file %>
 <% if @socket_file != '' -%>
 hhvm.server.socket = <%= @socket_file %>
 <% else -%>
-hhvm.server.port = 9000
+hhvm.server.port = <%= @port %>
 <% end -%>
 hhvm.server.type = fastcgi
 hhvm.server.default_document = index.php
