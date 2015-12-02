@@ -86,7 +86,8 @@ class hhvm::params {
     default => '/etc/hhvm/php.ini',
   }
 
-  $socket_file = ''
+  $socket = false
+  $socket_file = '/var/run/hhvm/socket'
 
   $use_hhvm_repo = false
 

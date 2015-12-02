@@ -205,6 +205,7 @@ class hhvm (
   $config_php_ini_file   = params_lookup( 'config_php_ini_file' ),
   $source_php_ini_file   = params_lookup( 'source_php_ini_file' ),
   $template_php_ini_file = params_lookup( 'template_php_ini_file' ),
+  $socket                = params_lookup( 'socket' ),
   $socket_file           = params_lookup( 'socket_file' ),
   $my_class              = params_lookup( 'my_class' ),
   $source                = params_lookup( 'source' ),
@@ -249,7 +250,7 @@ class hhvm (
   $protocol              = params_lookup( 'protocol' )
   ) inherits hhvm::params {
 
-  $bool_socket_file=any2bool($socket_file)
+  $bool_socket=any2bool($socket)
   $bool_use_hhvm_repo=any2bool($use_hhvm_repo)
   $bool_source_dir_purge=any2bool($source_dir_purge)
   $bool_service_autorestart=any2bool($service_autorestart)
@@ -293,14 +294,14 @@ class hhvm (
     false   => undef,
   }
 
-  $manage_port = $hhvm::bool_socket_file ? {
-    true  => 'socket',
+  $manage_port = $hhvm::bool_socket ? {
+    true  => $hhvm::socket_file,
     false => $hhvm::port,
   }
 
-  $manage_monitor_target = $hhvm::bool_socket_file ? {
+  $manage_monitor_target = $hhvm::bool_socket ? {
     true  => $hhvm::socket_file,
-    false => $hhvm::monitor_target,
+    false => $hhvm::port,
   }
 
   $manage_file = $hhvm::bool_absent ? {
