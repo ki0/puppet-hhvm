@@ -7,7 +7,7 @@ pid =  <%= @pid_file %>
 ; hhvm specific
 
 <% if @socket_file != '' -%>
-hhvm.server.socket = <%= @socket_file %>
+hhvm.server.file_socket = <%= @socket_file %>
 <% else -%>
 hhvm.server.port = <%= @port %>
 <% end -%>

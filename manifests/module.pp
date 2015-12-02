@@ -25,7 +25,6 @@ define hhvm::module (
       require => Package[hhvm]
     }
     file_line { "HHVMModuleIni_${name}":
-      ensure => present,
       path   => $hhvm::config_file,
       after  => 'hhvm.dynamic_extension_path*',
       line   => "hhvm.dynamic_extensions[${name}] = ${name}.so",
