@@ -295,7 +295,7 @@ class hhvm (
   }
 
   $manage_port = $hhvm::bool_socket ? {
-    true  => $hhvm::socket_file,
+    true  => 'socket',
     false => $hhvm::port,
   }
 
