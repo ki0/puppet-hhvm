@@ -24,12 +24,10 @@ define hhvm::module (
       name    => $real_install_package,
       require => Package[hhvm]
     }
-    concat::fragment { "HHVMModuleIni_${name}":
-      ensure  => $hhvm::manage_file,
-      target  => $hhvm::config_file,
-      content => template($hhvm::template_extensions),
-      order   => 90,
-      notify  => Service[hhvm]
+    file_line { "HHVMModuleIni_${name}":
+      ensure => present,
+      after  => 'hhvm.dynamic_extension_path*',
+      line   => "hhvm.dynamic_extensions[${name}] = ${name}.so",
     }
   }
 }
