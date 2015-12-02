@@ -451,7 +451,7 @@ class hhvm (
     if $hhvm::service != '' {
       monitor::process { 'hhvm_process':
         process  => $hhvm::process,
-        service  => $hhvm::service
+        service  => $hhvm::service,
         pidfile  => $hhvm::pid_file,
         user     => $hhvm::process_user,
         argument => $hhvm::process_args,
