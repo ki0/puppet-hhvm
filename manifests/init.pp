@@ -207,6 +207,8 @@ class hhvm (
   $template_php_ini_file = params_lookup( 'template_php_ini_file' ),
   $socket                = params_lookup( 'socket' ),
   $socket_file           = params_lookup( 'socket_file' ),
+  $config_dir_extensions = params_lookup( 'config_dir_extensions' ),
+  $template_extensions   = params_lookup( 'template_extensions' ),
   $my_class              = params_lookup( 'my_class' ),
   $source                = params_lookup( 'source' ),
   $source_dir            = params_lookup( 'source_dir' ),

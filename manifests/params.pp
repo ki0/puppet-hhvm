@@ -45,6 +45,10 @@ class hhvm::params {
     default => '/etc/hhvm',
   }
 
+  $config_dir_extensions = $::operatingsystem ? {
+    default => '/usr/share/hhvm/extensions',
+  }
+
   $config_file = $::operatingsystem ? {
     default => '/etc/hhvm/server.ini',
   }
@@ -102,6 +106,7 @@ class hhvm::params {
   $source_dir_purge = false
   $template = 'hhvm/server.ini.erb'
   $template_php_ini_file = 'hhvm/php.ini.erb'
+  $template_extensions = 'hhvm/extensions.erb'
   $options = ''
   $service_autorestart = true
   $version = 'present'
