@@ -15,8 +15,9 @@ hhvm.server.type = fastcgi
 hhvm.server.default_document = index.php
 hhvm.log.use_log_file = true
 hhvm.log.file =  <%= @log_file %>
-hhvm.repo.central.path = /var/run/hhvm/hhvm.hhbc
+hhvm.log.level = Warning
+hhvm.log.always_log_unhandled_exceptions = true
+hhvm.log.runtime_error_reporting_level = 8191
+hhvm.mysql.typed_results = false
+hhvm.repo.central.path = <%= @repo_central_path %>
 
-<% if @config_dir_extensions != '' %>
-hhvm.dynamic_extension_path = <%= @config_dir_extensions %>
-<% end -%>

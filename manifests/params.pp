@@ -94,6 +94,10 @@ class hhvm::params {
     default => 'hhvm-'
   }
 
+  $repo_central_path = $::operatingsystem ? {
+    default => '/var/run/hhvm/hhvm.hhbc'
+  }
+
   $socket = false
   $socket_file = '/var/run/hhvm/socket'
 

@@ -210,6 +210,7 @@ class hhvm (
   $config_dir_extensions = params_lookup( 'config_dir_extensions' ),
   $template_extensions   = params_lookup( 'template_extensions' ),
   $module_prefix         = params_lookup( 'module_prefix'),
+  $repo_central_path     = params_lookup( 'repo_central_path' ),
   $my_class              = params_lookup( 'my_class' ),
   $source                = params_lookup( 'source' ),
   $source_dir            = params_lookup( 'source_dir' ),
