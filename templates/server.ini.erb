@@ -16,3 +16,6 @@ hhvm.server.default_document = index.php
 hhvm.log.use_log_file = true
 hhvm.log.file =  <%= @log_file %>
 hhvm.repo.central.path = /var/run/hhvm/hhvm.hhbc
+
+<% if @config_dir_extensions != '' %>
+hhvm.dynamic_extension_path = <%= @config_dir_extensions %>
