@@ -28,7 +28,7 @@ define hhvm::module (
       mode    => '0640',
       owner   => $hhvm::config_file_owner,
       group   => $hhvm::config_file_group,
-      require => Package["HHVModule_${name}"]
+      require => Package[$real_install_package]
     }
     concat::fragment { "HHVMModuleIni_${name}":
       ensure  => $hhvm::manage_file,
