@@ -90,6 +90,10 @@ class hhvm::params {
     default => '/etc/hhvm/php.ini',
   }
 
+  $module_prefix = $::operatingsystem ? {
+    default => 'hhvm-'
+  }
+
   $socket = false
   $socket_file = '/var/run/hhvm/socket'
 
