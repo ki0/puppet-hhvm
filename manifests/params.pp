@@ -114,7 +114,9 @@ class hhvm::params {
   $source_dir_purge = false
   $template = 'hhvm/server.ini.erb'
   $template_php_ini_file = 'hhvm/php.ini.erb'
-  $template_extensions = 'hhvm/extensions.erb'
+  $template_extensions = 'hhvm/concat_ini_extensions.erb'
+  $template_ini_header = 'hhvm/concat_ini_header.erb'
+  $template_ini_footer = 'hhvm/concat_ini_footer.erb'
   $options = ''
   $service_autorestart = true
   $version = 'present'

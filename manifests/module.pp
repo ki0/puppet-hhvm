@@ -3,7 +3,7 @@ define hhvm::module (
   $module_prefix = '',
   $absent        = '',
 ){
-  include hhvm
+  include iniconcat
 
   if $absent {
     $real_version = 'absent'
@@ -24,10 +24,12 @@ define hhvm::module (
       name    => $real_install_package,
       require => Package[hhvm]
     }
-    file_line { "HHVMModuleIni_${name}":
-      path   => $hhvm::config_file,
-      after  => 'hhvm.dynamic_extension_path*',
-      line   => "hhvm.dynamic_extensions[${name}] = ${name}.so",
+    concat::fragment { "HHVMModuleIni_${name}":
+      ensure  => $real_version,
+      target  => $hhvm::config_file,
+      content => template($hhvm::template_extensions),
+      order   => '40',
+      notify  => Service[hhvm]
     }
   }
 }
