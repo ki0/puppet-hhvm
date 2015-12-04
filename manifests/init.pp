@@ -209,6 +209,8 @@ class hhvm (
   $socket_file           = params_lookup( 'socket_file' ),
   $config_dir_extensions = params_lookup( 'config_dir_extensions' ),
   $template_extensions   = params_lookup( 'template_extensions' ),
+  $template_ini_header   = params_lookup( 'template_ini_header' ),
+  $template_ini_footer   = params_lookup( 'template_ini_footer' ),
   $module_prefix         = params_lookup( 'module_prefix'),
   $repo_central_path     = params_lookup( 'repo_central_path' ),
   $my_class              = params_lookup( 'my_class' ),
@@ -393,19 +395,22 @@ class hhvm (
     noop    => $hhvm::bool_noops,
   }
 
-  file { 'php.ini':
-    ensure  => $hhvm::manage_file,
-    path    => $hhvm::config_php_ini_file,
-    mode    => $hhvm::config_file_mode,
-    owner   => $hhvm::config_file_owner,
-    group   => $hhvm::config_file_group,
-    require => Package[$hhvm::package],
-    notify  => $hhvm::manage_service_autorestart,
-    source  => $hhvm::manage_php_ini_file_source,
-    content => $hhvm::manage_php_ini_file_content,
-    replace => $hhvm::manage_file_replace,
-    audit   => $hhvm::manage_audit,
-    noop    => $hhvm::bool_noops,
+  if ($hhvm::source_php_ini and $hhvm::source_php_ini != '')
+  or ($hhvm::template_php_ini and $hhvm::template_php_ini != '') {
+    file { 'php.ini':
+      ensure  => $hhvm::manage_file,
+      path    => $hhvm::config_php_ini_file,
+      mode    => $hhvm::config_file_mode,
+      owner   => $hhvm::config_file_owner,
+      group   => $hhvm::config_file_group,
+      require => Package[$hhvm::package],
+      notify  => $hhvm::manage_service_autorestart,
+      source  => $hhvm::manage_php_ini_file_source,
+      content => $hhvm::manage_php_ini_file_content,
+      replace => $hhvm::manage_file_replace,
+      audit   => $hhvm::manage_audit,
+      noop    => $hhvm::bool_noops,
+    }
   }
 
   # The whole hhvm configuration directory can be recursively overriden

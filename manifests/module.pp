@@ -26,9 +26,9 @@ define hhvm::module (
     }
     concat::fragment { "HHVMModuleIni_${name}":
       ensure  => $real_version,
-      target  => $hhvm::config_file,
+      target  => $hhvm::config_php_ini_file,
       content => template($hhvm::template_extensions),
-      order   => '40',
+      order   => '80',
       notify  => Service[hhvm]
     }
   }

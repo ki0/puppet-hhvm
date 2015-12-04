@@ -6,6 +6,3 @@ session.save_path = <%= @data_dir %>/sessions
 session.gc_maxlifetime = 1440
 
 ; hhvm specific
-<% if @config_dir_extensions != '' %>
-hhvm.dynamic_extension_path = <%= @config_dir_extensions %>
-<% end -%>
