@@ -1,7 +1,7 @@
 define hhvm::ini (
   $content,
-  $ensure => 'present',
-  $order  => '50'
+  $ensure = 'present',
+  $order  = '50',
 ){
 
   include hhvm::iniconcat
