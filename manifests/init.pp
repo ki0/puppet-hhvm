@@ -311,7 +311,7 @@ class hhvm (
     false => $hhvm::port,
   }
 
-  $monitor_checksource = $hhvm::bool_socket ? {
+  $manage_monitor_checksource = $hhvm::bool_socket ? {
     true  => 'local',
     false => ''
   }
@@ -460,7 +460,7 @@ class hhvm (
         port        => $hhvm::port,
         target      => $hhvm::manage_monitor_target,
         tool        => $hhvm::monitor_tool,
-        checksource => $hhvm::monitor_checksource,
+        checksource => $hhvm::manage_monitor_checksource,
         enable      => $hhvm::manage_monitor,
         noop        => $hhvm::bool_noops,
       }
