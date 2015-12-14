@@ -227,6 +227,7 @@ class hhvm (
   $monitor               = params_lookup( 'monitor' , 'global' ),
   $monitor_tool          = params_lookup( 'monitor_tool' , 'global' ),
   $monitor_target        = params_lookup( 'monitor_target' , 'global' ),
+  $monitor_checksource   = params_lookup( 'monitor_checksource', 'global' ),
   $puppi                 = params_lookup( 'puppi' , 'global' ),
   $puppi_helper          = params_lookup( 'puppi_helper' , 'global' ),
   $firewall              = params_lookup( 'firewall' , 'global' ),
@@ -308,6 +309,11 @@ class hhvm (
   $manage_monitor_target = $hhvm::bool_socket ? {
     true  => $hhvm::socket_file,
     false => $hhvm::port,
+  }
+
+  $monitor_checksource = $hhvm::bool_socket ? {
+    true  => 'local',
+    false => ''
   }
 
   $manage_file = $hhvm::bool_absent ? {
@@ -448,14 +454,15 @@ class hhvm (
 
   ### Service monitoring, if enabled ( monitor => true )
   if $hhvm::bool_monitor == true {
-    if $hhvm::port != '' {
+    if $hhvm::port != '' or $hhvm::socket != false {
       monitor::port { "hhvm_${hhvm::protocol}_${hhvm::manage_port}":
-        protocol => $hhvm::protocol,
-        port     => $hhvm::port,
-        target   => $hhvm::manage_monitor_target,
-        tool     => $hhvm::monitor_tool,
-        enable   => $hhvm::manage_monitor,
-        noop     => $hhvm::bool_noops,
+        protocol    => $hhvm::protocol,
+        port        => $hhvm::port,
+        target      => $hhvm::manage_monitor_target,
+        tool        => $hhvm::monitor_tool,
+        checksource => $hhvm::monitor_checksource,
+        enable      => $hhvm::manage_monitor,
+        noop        => $hhvm::bool_noops,
       }
     }
     if $hhvm::service != '' {
@@ -499,5 +506,4 @@ class hhvm (
       noop    => $hhvm::bool_noops,
     }
   }
-
 }

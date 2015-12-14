@@ -128,6 +128,7 @@ class hhvm::params {
   $monitor = false
   $monitor_tool = ''
   $monitor_target = $::ipaddress
+  $monitor_checksource = ''
   $firewall = false
   $firewall_tool = ''
   $firewall_src = '0.0.0.0/0'
