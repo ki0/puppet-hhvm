@@ -105,6 +105,7 @@ class hhvm::params {
 
   $port = '9000'
   $protocol = 'tcp'
+  $port_admin = '8088'
 
   # General Settings
   $my_class = ''
