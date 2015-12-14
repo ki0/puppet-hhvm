@@ -254,7 +254,7 @@ class hhvm (
   $log_dir               = params_lookup( 'log_dir' ),
   $log_file              = params_lookup( 'log_file' ),
   $port                  = params_lookup( 'port' ),
-  $port_admin            = pramas_lookup( 'port_admin' ),
+  $port_admin            = params_lookup( 'port_admin' ),
   $protocol              = params_lookup( 'protocol' )
   ) inherits hhvm::params {
 
