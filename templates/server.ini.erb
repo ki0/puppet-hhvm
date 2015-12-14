@@ -8,6 +8,9 @@ pid =  <%= @pid_file %>
 
 <% if @socket_file != '' -%>
 hhvm.server.file_socket = <%= @socket_file %>
+hhvm.server.file_socket_owner = <%= @process_user %>
+hhvm.server.file_socket_group = <%= @process_user %>
+hhvm.server.file_socket_mode = 666
 <% else -%>
 hhvm.server.port = <%= @port %>
 <% end -%>
